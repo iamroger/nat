@@ -1,0 +1,33 @@
+diff -r rtpproxy-1.2.1/main.c rtpproxy-1.2.1-thamer/main.c
+132a133
+>     cf->advertised = NULL;
+150c151
+<     while ((ch = getopt(argc, argv, "vf2Rl:6:s:S:t:r:p:T:L:m:M:u:Fin:Pad:")) != -1)
+---
+>     while ((ch = getopt(argc, argv, "vf2Rl:6:s:S:t:r:p:T:L:m:M:u:Fin:Pad:A:")) != -1)
+151a153,157
+>
+>       case 'A':
+>         cf->advertised = strdup(optarg);
+>         break;
+>
+
+diff -r rtpproxy-1.2.1/rtpp_command.c rtpproxy-1.2.1-thamer/rtpp_command.c
+204c204,209
+<     else
+---
+>     else {
+>
+>       if(cf->advertised != NULL)
+>       len += sprintf(cp, "%d %s%s\n", lport, cf->advertised,
+>         (lia[0]->sa_family == AF_INET) ? "" : " 6");
+>       else
+206a212,214
+>
+>     }
+>
+
+diff -r rtpproxy-1.2.1/rtpp_defines.h rtpproxy-1.2.1-thamer/rtpp_defines.h
+138a139,140
+>
+>     char *advertised;
